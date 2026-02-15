@@ -4,12 +4,14 @@ let vcon = vcan.getContext("2d");
 
 let can = document.getElementById("can");
 let con = can.getContext("2d");
+console.log(vcan);
+console.log(can);
 
 vcan.width  = SCREEN_SIZE_W;
 vcan.height = SCREEN_SIZE_H;
 
-can.width  = SCREEN_SIZE_W * 3;
-can.height = SCREEN_SIZE_H * 3;
+can.width  = SCREEN_SIZE_W * 3.5;
+can.height = SCREEN_SIZE_H * 3.5;
 
 //見やすくなる
 con.mozimageSmoothingEnabled    = false;

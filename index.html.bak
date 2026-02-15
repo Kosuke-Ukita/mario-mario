@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "UTF-8">
+</head>
+<body>
+  <p>"ojisan"-某配管工髭おじさん中途半端にしかできなかったver-<br>
+    操作方法<br>
+  　　・move  : 矢印キー<br>
+  　　・jump  : xキー   <br>
+  　　・update: F5キー  <br>
+  </p>
+<canvas id="can"></canvas>
+<script src="const.js"></script>
+<script src="block.js"></script>
+<script src="map.js"></script>
+<script src="ojisan.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

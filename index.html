@@ -1,20 +1,41 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="ja">
+
 <head>
-<meta charset = "UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mario mario</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
+
 <body>
-  <p>"ojisan"-某配管工髭おじさん中途半端にしかできなかったver-<br>
-    操作方法<br>
-  　　・move  : 矢印キー<br>
-  　　・jump  : xキー   <br>
-  　　・update: F5キー  <br>
-  </p>
-<canvas id="can"></canvas>
-<script src="const.js"></script>
-<script src="block.js"></script>
-<script src="map.js"></script>
-<script src="ojisan.js"></script>
-<script src="main.js"></script>
+  <div class="wrap">
+    <header>
+      <h1>🍄 mario mario</h1>
+      <span class="badge">開発中</span>
+    </header>
+
+    <main>
+      <section class="game-panel">
+        <div id="game-container">
+          <canvas id="can"></canvas>
+          <script src="scripts/const.js"></script>
+          <script src="scripts/block.js"></script>
+          <script src="scripts/map.js"></script>
+          <script src="scripts/ojisan.js"></script>
+          <script src="scripts/main.js"></script>
+        </div>
+      </section>
+
+      <aside class="info">
+        <h2>操作方法</h2>
+        <div class="keys">
+            <p>move  : 矢印キー</p>
+            <p>jump  : xキー</p>
+            <p>reload: F5キー</p>
+        </div>
+      </aside>
+    </main>
+  </div>
 </body>
 </html>
