@@ -227,3 +227,193 @@ class Ojisan
         drawSprite(this.sprite, px, py);
     }
 }
+
+
+
+
+
+
+
+
+
+
+//
+//敵クラス
+//
+
+class Enemy
+{
+    constructor(x, y, acount=96, heigher=false)
+    {
+        this.x = x << 4;
+        this.y = y << 4;
+        this.vx = -4;  // 左方向に移動
+        this.vy = 0;
+        this.type = 0;
+        this.sprite = 0;
+        this.acount = acount;
+        this.stateacount = acount;
+        this.active = true;
+        this.heigher=heigher;
+        this.width = 16;
+        if (heigher) { this.height = 32;
+        } else { this.height=16; }
+    }
+
+    // 床の判定
+    checkFloor()
+    {
+        if(this.vy <= 0) return;
+
+        let lx = ((this.x + this.vx) >> 4);
+        let ly = ((this.y + this.vy) >> 4);
+
+        if(field.isBlock(lx + 1, ly + this.height - 1) || field.isBlock(lx + this.width - 2, ly + this.height - 1))
+        {
+            this.vy = 0;
+            this.y = ((((ly + this.height - 1) >> 4) << 4) - this.height) << 4;
+        }
+    }
+
+    // 横の壁の判定
+    checkWall()
+    {
+        let lx = ((this.x + this.vx) >> 4);
+        let ly = ((this.y + this.vy) >> 4);
+        
+        // 壁にぶつかったら方向転換
+        if(field.isBlock(lx + this.width - 1, ly + 8) || field.isBlock(lx, ly + 8))
+        {
+            this.vx = -this.vx;
+        }
+    }
+
+    // アニメーション更新
+    updateAnime()
+    {
+        this.sprite = this.stateacount + ((this.acount / 16) % 2);
+    }
+
+    // 更新処理
+    update()
+    {
+        if(!this.active) return;
+
+        this.acount++;
+        this.updateAnime();
+
+        // 重力
+        if(this.vy < 4 << 4) this.vy += GRVITY;
+
+        // 壁のチェック
+        this.checkWall();
+
+        // 床のチェック
+        this.checkFloor();
+
+        // 座標を更新
+        this.x += this.vx;
+        this.y += this.vy;
+    }
+
+    // 描画処理
+    draw()
+    {
+        if(!this.active) return;
+
+        let px = (this.x >> 4) - field.scx;
+        let py = (this.y >> 4) - field.scy;
+        drawSprite(this.sprite, px, py, this.heigher);
+    }
+}
+//
+// 敵管理クラス
+//
+
+class EnemyManager
+{
+    constructor()
+    {
+        this.enemies = [];
+    }
+
+    // 敵を追加
+    add(x, y, type = 0)
+    {
+        this.enemies.push(new Enemy(x, y, type));
+    }
+
+    // おじさんとの当たり判定
+    checkCollisionWithOjisan(ojisan)
+    {
+        for(let i = 0; i < this.enemies.length; i++)
+        {
+            if(!this.enemies[i].active) continue;
+
+            let ex = this.enemies[i].x >> 4;
+            let ey = this.enemies[i].y >> 4;
+            let ox = ojisan.x >> 4;
+            let oy = ojisan.y >> 4;
+
+            // 矩形の当たり判定
+            if(ox + 15 > ex && ox < ex + 15 &&
+               oy + 31 > ey && oy < ey + 15)
+            {
+                // おじさんが上から踏んだ場合
+                if(ojisan.vy > 0 && oy + 24 < ey + 8)
+                {
+                    this.enemies[i].active = false;
+                    ojisan.vy = -48; // 踏んだ時にジャンプ
+                }
+                else
+                {
+                    // ゲームオーバー処理などをここに追加
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // ブロックとの当たり判定
+    checkCollisionWithBlocks()
+    {
+        for(let i = 0; i < this.enemies.length; i++)
+        {
+            if(!this.enemies[i].active) continue;
+
+            for(let j = 0; j < block.length; j++)
+            {
+                let ex = this.enemies[i].x >> 4;
+                let ey = this.enemies[i].y >> 4;
+                let bx = block[j].x;
+                let by = block[j].y;
+
+                // ブロックとの当たり判定
+                if(ex + 15 > bx && ex < bx + 16 &&
+                   ey + 15 > by && ey < by + 16)
+                {
+                    this.enemies[i].active = false;
+                }
+            }
+        }
+    }
+
+    // 全ての敵を更新
+    update()
+    {
+        for(let i = 0; i < this.enemies.length; i++)
+        {
+            this.enemies[i].update();
+        }
+    }
+
+    // 全ての敵を描画
+    draw()
+    {
+        for(let i = 0; i < this.enemies.length; i++)
+        {
+            this.enemies[i].draw();
+        }
+    }
+}

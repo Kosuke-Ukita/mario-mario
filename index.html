@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>mario mario</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="./css/style.css" />
 </head>
 
 <body>
@@ -16,25 +16,25 @@
     </header>
 
     <main>
-      <section class="game-panel">
-        <div id="game-container">
-          <canvas id="can"></canvas>
-          <script src="scripts/const.js"></script>
-          <script src="scripts/block.js"></script>
-          <script src="scripts/map.js"></script>
-          <script src="scripts/ojisan.js"></script>
-          <script src="scripts/main.js"></script>
-        </div>
-      </section>
-
       <aside class="info">
         <h2>操作方法</h2>
         <div class="keys">
-            <p>move  : 矢印キー</p>
-            <p>jump  : xキー</p>
-            <p>reload: F5キー</p>
+            <p>move  : ←,→ / a,s</p>
+            <p>jump  : space</p>
+            <p>dash  : cntrl</p>
+            <p>reload: F5</p>
         </div>
       </aside>
+      <section class="game-panel">
+        <div id="game-container">
+          <canvas id="can"></canvas>
+          <script src="./scripts/const.js"></script>
+          <script src="./scripts/block.js"></script>
+          <script src="./scripts/map.js"></script>
+          <script src="./scripts/ojisan.js"></script>
+          <script src="./scripts/main.js"></script>
+        </div>
+      </section>
     </main>
   </div>
 </body>
